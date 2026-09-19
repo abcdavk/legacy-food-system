@@ -26,18 +26,20 @@ class LegacyHunger {
       const health = player.getComponent(EntityComponentTypes.Health);
       if (!health) return;
 
-      const nutrition = this.getNutritionValue(itemStack);
-      const restoredHealth = this.nutritionToHealth(nutrition);
+      const heal = this.getHealingValue(itemStack);
 
-      health.setCurrentValue(Math.min(health.currentValue + restoredHealth, health.effectiveMax));
+      health.setCurrentValue(Math.min(health.currentValue + heal, health.effectiveMax));
+    });
+
+    world.afterEvents.effectAdd.subscribe(({ entity, effect }) => {
+      console.log(effect.typeId);
+      if (effect.typeId !== "hunger") return;
+      entity.addEffect("nausea", effect.duration, { amplifier: effect.amplifier });
+      entity.removeEffect("hunger");
     });
   }
 
-  private nutritionToHealth(nutrition: number): number {
-    return Math.max(1, Math.round(nutrition / 2));
-  }
-
-  private getNutritionValue(itemStack: ItemStack): number {
+  private getHealingValue(itemStack: ItemStack): number {
     const vanillaFood = vanilla_food.find((v) => itemStack.typeId === v.typeId);
     if (vanillaFood) {
       return vanillaFood.nutrition;
