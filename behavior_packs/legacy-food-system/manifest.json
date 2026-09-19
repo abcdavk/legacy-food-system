@@ -1,0 +1,68 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Legacy Food System",
+    "description": "by abcdavk",
+    "uuid": "a303bc39-8dad-4ce4-8d67-a1c3b4642d7e",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      26,
+      50
+    ]
+  },
+  "modules": [
+    {
+      "description": "Behavior",
+      "version": [
+        1,
+        0,
+        0
+      ],
+      "uuid": "2c19cc2e-d70c-4a0e-a297-fd287e01f428",
+      "type": "data"
+    },
+    {
+      "description": "Script resources",
+      "language": "javascript",
+      "type": "script",
+      "uuid": "b6883d6b-b86d-4a1b-9105-8aace3ac1f87",
+      "version": [
+        0,
+        0,
+        1
+      ],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "40e27986-aed5-412b-8871-beb09f7922d5",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": [
+        2,
+        10,
+        0
+      ]
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": [
+        2,
+        2,
+        0
+      ]
+    }
+  ]
+}

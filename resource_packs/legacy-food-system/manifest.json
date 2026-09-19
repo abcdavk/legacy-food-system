@@ -1,0 +1,40 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Legacy Food System",
+    "description": "by abcdavk",
+    "uuid": "40e27986-aed5-412b-8871-beb09f7922d5",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      26,
+      50
+    ]
+  },
+  "modules": [
+    {
+      "description": "Add-on Pack Resources",
+      "type": "resources",
+      "uuid": "523d72d2-3ba9-498a-bc63-8beb5fe268cb",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "a303bc39-8dad-4ce4-8d67-a1c3b4642d7e",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}
