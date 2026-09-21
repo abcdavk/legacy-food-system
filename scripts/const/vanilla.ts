@@ -1,5 +1,29 @@
 export const vanilla_food = [
   {
+    typeId: "minecraft:cooked_mutton",
+    nutrition: 6,
+  },
+  {
+    typeId: "minecraft:mutton",
+    nutrition: 2,
+  },
+  {
+    typeId: "minecraft:tropical_fish",
+    nutrition: 1,
+  },
+  {
+    typeId: "minecraft:cod",
+    nutrition: 2,
+  },
+  {
+    typeId: "minecraft:cooked_cod",
+    nutrition: 5,
+  },
+  {
+    typeId: "minecraft:dried_kelp",
+    nutrition: 1,
+  },
+  {
     typeId: "minecraft:apple",
     nutrition: 4,
   },
@@ -102,14 +126,6 @@ export const vanilla_food = [
   {
     typeId: "minecraft:mushroom_stew",
     nutrition: 6,
-  },
-  {
-    typeId: "minecraft:muttonCooked",
-    nutrition: 6,
-  },
-  {
-    typeId: "minecraft:muttonRaw",
-    nutrition: 2,
   },
   {
     typeId: "minecraft:poisonous_potato",

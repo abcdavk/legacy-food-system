@@ -1,4 +1,6 @@
 import {
+  Effect,
+  Entity,
   EntityComponentTypes,
   HudElement,
   HudVisibility,
@@ -12,31 +14,43 @@ import { vanilla_food } from "./const/vanilla";
 
 class LegacyHunger {
   constructor() {
-    world.afterEvents.playerSpawn.subscribe(({ player }) => {
-      player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, [HudElement.Hunger]);
-    });
-
     system.runInterval(() => {
       world.getPlayers().forEach((player) => {
         this.resetHunger(player);
       });
+    }, 4);
+
+    world.afterEvents.playerSpawn.subscribe(({ player }) => {
+      player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, [HudElement.Hunger]);
     });
 
     world.afterEvents.itemCompleteUse.subscribe(({ itemStack, source: player }) => {
-      const health = player.getComponent(EntityComponentTypes.Health);
-      if (!health) return;
-
       const heal = this.getHealingValue(itemStack);
 
-      health.setCurrentValue(Math.min(health.currentValue + heal, health.effectiveMax));
+      this.healPlayer(player, heal);
     });
 
     world.afterEvents.effectAdd.subscribe(({ entity, effect }) => {
-      console.log(effect.typeId);
-      if (effect.typeId !== "hunger") return;
-      entity.addEffect("nausea", effect.duration, { amplifier: effect.amplifier });
-      entity.removeEffect("hunger");
+      this.hungerToNausea(entity, effect);
     });
+
+    world.beforeEvents.playerInteractWithBlock.subscribe(({ block, player }) => {
+      const hunger = player.getComponent(EntityComponentTypes.Hunger);
+      if (!hunger) return;
+      system.run(() => {
+        const hungerDelta = hunger.currentValue - 10;
+        if (hungerDelta <= 0) return;
+
+        this.healPlayer(player, hungerDelta);
+        system.run(() => this.resetHunger(player));
+      });
+    });
+  }
+
+  private healPlayer(player: Player, value: number) {
+    const health = player.getComponent(EntityComponentTypes.Health);
+    if (!health) return;
+    health.setCurrentValue(Math.min(health.currentValue + value, health.effectiveMax));
   }
 
   private getHealingValue(itemStack: ItemStack): number {
@@ -57,6 +71,12 @@ class LegacyHunger {
     if (!saturation) return;
     hunger.setCurrentValue(10);
     saturation.resetToMinValue();
+  }
+
+  private hungerToNausea(entity: Entity, effect: Effect) {
+    if (effect.typeId !== "minecraft:hunger") return;
+    entity.addEffect("minecraft:nausea", effect.duration, { amplifier: effect.amplifier });
+    entity.removeEffect("minecraft:hunger");
   }
 }
 
